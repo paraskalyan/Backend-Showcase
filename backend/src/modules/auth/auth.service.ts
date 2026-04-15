@@ -1,11 +1,30 @@
-export const signup = async()=>{
+import { prisma } from "../../lib/prisma.js";
+import { AppError } from "../../utils/AppError.js";
+import type { Signup } from "./auth.types.js";
+import argon2 from 'argon2'
 
-}
+export const signup = async (data: Signup) => {
+  const { email, name, username, password } = data;
+  if (!email || !name || !username || !password) {
+    throw new AppError("All fields are required", 400);
+  }
+  if(password.length < 8){
+    throw new AppError("Password must be 8 characters long", 400);
+  }
 
-export const login = async()=>{
+  const hashedPassword = await argon2.hash(password);
 
-}
+  const newUser = await prisma.user.create({
+    data:{
+        email: email,
+        name: name,
+        username: username,
+        password: hashedPassword
+    }
+  })
+  return {message: 'success', user : newUser}
+};
 
-export const logout = async()=>{
+export const login = async () => {};
 
-}
+export const logout = async () => {};

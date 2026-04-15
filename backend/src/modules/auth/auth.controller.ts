@@ -1,11 +1,13 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import * as authService from './auth.service.js';
 
-export const signup = async(req: Request, res: Response) => {
+export const signup = async(req: Request, res: Response, next : NextFunction) => {
   try {
-    const result = await authService.signup();
+    const result = await authService.signup(req.body);
     res.json(result);
-  } catch (error) {  }
+  } catch (error) { 
+      next(error)
+   }
 };
 
 export const login = async(req: Request, res: Response) => {
