@@ -3,21 +3,28 @@ import * as authService from './auth.service.js';
 
 export const signup = async(req: Request, res: Response, next : NextFunction) => {
   try {
-    const result = await authService.signup(req.body);
-    res.json(result);
+    const user = await authService.signup(req.body);
+    res.json(user);
   } catch (error) { 
       next(error)
    }
 };
 
-export const login = async(req: Request, res: Response) => {
+export const login = async(req: Request, res: Response, next : NextFunction) => {
   try {
-    const result = await authService.login();
-    res.json(result);
-  } catch (error) {}
+    const token = await authService.login(req.body);
+    res.cookie("token", token,{
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+  } catch (error) {
+     next(error);
+  }
 };
 
-export const logout = async(req: Request, res: Response) => {
+export const logout = async(req: Request, res: Response, next : NextFunction) => {
   try {
     const result = await authService.logout();
     res.json(result);
