@@ -15,5 +15,5 @@ app.use((req, res, next) => {
 app.use(errorHandler);
 
 app.listen(PORT, ()=>{
-    console.log("Server Running")
-})
+    console.log("Server Running");
+});
