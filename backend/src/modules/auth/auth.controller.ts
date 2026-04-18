@@ -48,5 +48,7 @@ export const logout = async (
       success: true,
       message: "Logged out successfully",
     });
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
