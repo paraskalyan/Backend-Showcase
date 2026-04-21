@@ -1,4 +1,5 @@
 import { prisma } from "../../lib/prisma.js"
+import type { CreateProjectData } from "./types.js";
 
 export const getAllProjects = async () => {
    const projects = await prisma.project.findMany();
@@ -15,8 +16,19 @@ export const getProject = async (id : string) => {
     return project;
 }
 
-export const createProject = async () => {
-    
+export const createProject = async (newData : CreateProjectData) => {
+    const {name, description, visibility, stack, userId, endpoints} = newData
+    const updatedProject = await prisma.project.create({
+        data:{
+            name,
+            description,
+            visibility,
+            stack,
+            userId,
+            endpoints,
+        }
+    })
+    return updateProject;
 }
 
 export const updateProject = async () => {
