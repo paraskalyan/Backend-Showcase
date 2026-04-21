@@ -1,6 +1,12 @@
 import type { NextFunction, Request, Response } from "express";
-import * as projectService from '../projects/projects.service.js';
-import { sendSuccess } from "../../utils/response.js";
+import * as projectService from "../projects/projects.service.js";
+import { sendError, sendSuccess } from "../../utils/response.js";
+
+type Params = {
+  id: string;
+};
+
+
 export const getAllProjects = async (
   req: Request,
   res: Response,
@@ -15,12 +21,19 @@ export const getAllProjects = async (
 };
 
 export const getProject = async (
-  req: Request,
+  req: Request<Params>,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const project = await projectService.getProject();
+    const { id } = req.params;
+    if (!id) {
+      return sendError(res, "Project ID is required", 400);
+    }
+    const project = await projectService.getProject(id);
+    if(!project){
+      return sendError(res, "Project not found", 404);
+    }
     return sendSuccess(res, project, "Project fetched successfully", 200);
   } catch (error) {
     next(error);
