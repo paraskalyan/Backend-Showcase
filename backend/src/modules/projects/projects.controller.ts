@@ -59,7 +59,7 @@ export const updateProject = async (
   next: NextFunction,
 ) => {
   try {
-    const project = await projectService.createProject();
+    const project = await projectService.updateProject();
     return sendSuccess(res, project, "Projects updated successfully", 200);
   } catch (error) {
     next(error);
@@ -71,7 +71,7 @@ export const deleteProject = async (
   next: NextFunction,
 ) => {
   try {
-    const project = await projectService.createProject();
+    const project = await projectService.deleteProject();
     return sendSuccess(res, project, "Projects deleted successfully", 204);
   } catch (error) {
     next(error);
