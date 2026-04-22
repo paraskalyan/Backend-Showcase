@@ -1,8 +1,12 @@
 type Visibility = "PUBLIC" | "PRIVATE";
-type Endpoint = {
+type EndpointInput = {
+  name: string;
+  description: string;
+  url: string;
   method: "GET" | "POST" | "PUT" | "DELETE";
-  path: string;
-  description?: string;
+  headers?: any;
+  body?: any;
+  queryParams?: any;
 };
 
 export type CreateProjectData = {
@@ -11,5 +15,5 @@ export type CreateProjectData = {
     visibility: Visibility,
     stack: string[],
     userId: string,
-    endpoints: Endpoint[],
+    endpoints: EndpointInput[],
 }

@@ -46,8 +46,8 @@ export const createProject = async (
   next: NextFunction,
 ) => {
   try {
-    const project = await projectService.createProject();
-    return sendSuccess(res, project, "Projects created successfully", 201);
+    const project = await projectService.createProject(req.body);
+    return sendSuccess(res, project, "Project created successfully", 201);
   } catch (error) {
     next(error);
   }
@@ -66,13 +66,17 @@ export const updateProject = async (
   }
 };
 export const deleteProject = async (
-  req: Request,
+  req: Request<Params>,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const project = await projectService.deleteProject();
-    return sendSuccess(res, project, "Projects deleted successfully", 204);
+    const { id } = req.params;
+    if (!id) {
+      return sendError(res, "Project ID is required", 400);
+    }
+    const project = await projectService.deleteProject(id);
+    return sendSuccess(res, project, "Project deleted successfully", 204);
   } catch (error) {
     next(error);
   }
