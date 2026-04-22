@@ -30,7 +30,7 @@ export const createEndpoint = async (
 ) => {
   try {
     const endpoint = await endpointService.createEndpoint(req.body);
-    return sendSuccess(res, endpoint, "Endpoint created successfully", 200);
+    return sendSuccess(res, endpoint, "Endpoint created successfully", 201);
   } catch (error) {
     next(error);
   }
