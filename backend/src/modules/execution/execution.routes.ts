@@ -1,5 +1,5 @@
 import express from "express";
-import { runExecution } from "../controllers/execution.controller";
+import { runExecution } from "./execution.controller.js";
 
 const router = express.Router();
 
