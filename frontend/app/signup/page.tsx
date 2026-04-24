@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Terminal, ArrowLeft, Eye, EyeOff, Check } from "lucide-react"
+import { useForm } from "react-hook-form"
 
 const passwordRequirements = [
   { label: "At least 8 characters", test: (p: string) => p.length >= 8 },
@@ -21,6 +22,8 @@ export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+
+  const {register} = useForm();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -175,6 +178,7 @@ export default function SignupPage() {
                   placeholder="John"
                   required
                   className="h-11 bg-card"
+                  {...register('firstName')}
                 />
               </div>
               <div className="space-y-2">
@@ -185,6 +189,7 @@ export default function SignupPage() {
                   placeholder="Doe"
                   required
                   className="h-11 bg-card"
+                  {...register('lastName')}
                 />
               </div>
             </div>
@@ -197,6 +202,7 @@ export default function SignupPage() {
                 placeholder="you@example.com"
                 required
                 className="h-11 bg-card"
+                {...register('email')}
               />
             </div>
 
@@ -208,8 +214,7 @@ export default function SignupPage() {
                   type={showPassword ? "text" : "password"}
                   placeholder="Create a password"
                   required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  {...register('password')}
                   className="h-11 bg-card pr-10"
                 />
                 <button
@@ -246,8 +251,7 @@ export default function SignupPage() {
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="Confirm your password"
                   required
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  {...register('confirmPassword')}
                   className={`h-11 bg-card pr-10 ${
                     confirmPassword.length > 0
                       ? passwordsMatch
