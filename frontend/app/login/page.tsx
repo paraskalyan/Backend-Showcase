@@ -7,17 +7,21 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Terminal, ArrowLeft, Eye, EyeOff } from "lucide-react"
+import { fromBase62 } from "shadcn/preset"
+import { useForm, SubmitHandler } from 'react-hook-form'
+
+type Inputs = {
+  email: string,
+  password: string,
+}
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const {register, handleSubmit, formState:{errors}} = useForm<Inputs>();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    // Simulate login
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setIsLoading(false)
+  const onSubmit: SubmitHandler<Inputs> = (data)=>{
+    console.log(data)
   }
 
   return (
@@ -136,7 +140,7 @@ export default function LoginPage() {
           </div>
 
           {/* Login form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -145,6 +149,7 @@ export default function LoginPage() {
                 placeholder="you@example.com"
                 required
                 className="h-11 bg-card"
+                {...register('email')}
               />
             </div>
 
@@ -162,6 +167,7 @@ export default function LoginPage() {
                   placeholder="Enter your password"
                   required
                   className="h-11 bg-card pr-10"
+                  {...register('password', {minLength: 8})}
                 />
                 <button
                   type="button"
