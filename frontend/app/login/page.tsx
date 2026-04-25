@@ -9,6 +9,8 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Terminal, ArrowLeft, Eye, EyeOff } from "lucide-react"
 import { fromBase62 } from "shadcn/preset"
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { login } from "@/API/AuthAPIService"
 
 type Inputs = {
   email: string,
@@ -20,7 +22,9 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const {register, handleSubmit, formState:{errors}} = useForm<Inputs>();
 
-  
+  const mutation = useMutation({
+    mutationFn: (data) => login(data),
+  })
 
   const onSubmit: SubmitHandler<Inputs> = (data)=>{
     console.log(data)
