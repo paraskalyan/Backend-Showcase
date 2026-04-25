@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Terminal, ArrowLeft, Eye, EyeOff, Check } from "lucide-react"
-import { useForm } from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form"
 
 const passwordRequirements = [
   { label: "At least 8 characters", test: (p: string) => p.length >= 8 },
@@ -16,21 +16,25 @@ const passwordRequirements = [
   { label: "One number", test: (p: string) => /\d/.test(p) },
 ]
 
+type Inputs= {
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string,
+  confirmPassword: string,
+}
+
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
 
-  const {register} = useForm();
+  const {register, handleSubmit, watch} = useForm<Inputs>();
+  const password = watch('password');
+  const confirmPassword = watch('confirmPassword');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    // Simulate signup
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setIsLoading(false)
+  const onSubmit: SubmitHandler<Inputs> = (data)=>{
+    console.log(data)
   }
 
   const passwordsMatch = password === confirmPassword && confirmPassword.length > 0
@@ -168,7 +172,7 @@ export default function SignupPage() {
           </div>
 
           {/* Signup form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="firstName">First name</Label>
