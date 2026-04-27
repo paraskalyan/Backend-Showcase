@@ -37,7 +37,7 @@ export default function SignupPage() {
     console.log(data)
   }
 
-  const passwordsMatch = password === confirmPassword && confirmPassword.length > 0
+  const passwordsMatch = password === confirmPassword && confirmPassword?.length > 0
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -230,7 +230,7 @@ export default function SignupPage() {
                 </button>
               </div>
               {/* Password requirements */}
-              {password.length > 0 && (
+              {password?.length > 0 && (
                 <div className="grid grid-cols-2 gap-1 pt-2">
                   {passwordRequirements.map((req) => (
                     <div
@@ -257,7 +257,7 @@ export default function SignupPage() {
                   required
                   {...register('confirmPassword')}
                   className={`h-11 bg-card pr-10 ${
-                    confirmPassword.length > 0
+                    confirmPassword?.length > 0
                       ? passwordsMatch
                         ? "border-accent"
                         : "border-destructive"
@@ -272,7 +272,7 @@ export default function SignupPage() {
                   {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
-              {confirmPassword.length > 0 && !passwordsMatch && (
+              {confirmPassword?.length > 0 && !passwordsMatch && (
                 <p className="text-xs text-destructive">Passwords do not match</p>
               )}
             </div>

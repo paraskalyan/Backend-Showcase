@@ -13,7 +13,7 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { login } from "@/API/AuthAPIService"
 
 type Inputs = {
-  email: string,
+  username: string,
   password: string,
 }
 
@@ -23,11 +23,12 @@ export default function LoginPage() {
   const {register, handleSubmit, formState:{errors}} = useForm<Inputs>();
 
   const mutation = useMutation({
-    mutationFn: (data) => login(data),
+    mutationFn: (data: Inputs) => login(data),
   })
 
   const onSubmit: SubmitHandler<Inputs> = (data)=>{
-    console.log(data)
+    console.log(data);
+    mutation.mutate(data);
   }
 
   return (
@@ -155,7 +156,7 @@ export default function LoginPage() {
                 placeholder="you@example.com"
                 required
                 className="h-11 bg-card"
-                {...register('email')}
+                {...register('username')}
               />
             </div>
 

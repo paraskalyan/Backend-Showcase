@@ -1,4 +1,4 @@
 export const API_ROUTES = {
-    LOGIN: '/login',
-    SIGNUP: '/signup',
+    LOGIN: '/auth/login',
+    SIGNUP: '/auth/signup',
 }
