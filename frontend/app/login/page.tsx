@@ -149,10 +149,10 @@ export default function LoginPage() {
           {/* Login form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">Username</Label>
               <Input
-                id="email"
-                type="email"
+                id="username"
+                type="text"
                 placeholder="you@example.com"
                 required
                 className="h-11 bg-card"
