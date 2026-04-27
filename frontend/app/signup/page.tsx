@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Terminal, ArrowLeft, Eye, EyeOff, Check } from "lucide-react"
 import { useForm, SubmitHandler } from "react-hook-form"
+import { useMutation } from "@tanstack/react-query"
+import { signup } from "@/API/AuthAPIService"
 
 const passwordRequirements = [
   { label: "At least 8 characters", test: (p: string) => p.length >= 8 },
@@ -17,8 +19,10 @@ const passwordRequirements = [
 ]
 
 type Inputs= {
-  firstName: string,
-  lastName: string,
+  firstName?: string,
+  lastName?: string,
+  name?: string,
+  username: string,
   email: string,
   password: string,
   confirmPassword: string,
@@ -33,8 +37,18 @@ export default function SignupPage() {
   const password = watch('password');
   const confirmPassword = watch('confirmPassword');
 
+  const mutation = useMutation({
+    mutationFn: (data: Inputs) => signup(data)
+  })
+
   const onSubmit: SubmitHandler<Inputs> = (data)=>{
-    console.log(data)
+    const {firstName, lastName, ...rest} = data;
+    const newuser = {
+      ...rest,
+      name: data.firstName + " " + data.lastName,
+    }
+    console.log(newuser)
+    mutation.mutate(newuser)
   }
 
   const passwordsMatch = password === confirmPassword && confirmPassword?.length > 0
@@ -209,6 +223,17 @@ export default function SignupPage() {
                 {...register('email')}
               />
             </div>
+            <div className="space-y-2">
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  id="username"
+                  type="text"
+                  placeholder="Doe"
+                  required
+                  className="h-11 bg-card"
+                  {...register('username')}
+                />
+              </div>
 
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
