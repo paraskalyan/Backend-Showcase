@@ -11,6 +11,8 @@ import { fromBase62 } from "shadcn/preset"
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { login } from "@/API/AuthAPIService"
+import {toast} from 'sonner';
+import { useRouter } from "next/navigation"
 
 type Inputs = {
   username: string,
@@ -18,16 +20,21 @@ type Inputs = {
 }
 
 export default function LoginPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false);
   const {register, handleSubmit, formState:{errors}} = useForm<Inputs>();
 
   const mutation = useMutation({
     mutationFn: (data: Inputs) => login(data),
+    onSuccess: (response)=> {
+      toast.success(response?.data?.message);
+      router.push('/dashboard');
+    }
   })
 
+  const isLoading = mutation.isPending;
+
   const onSubmit: SubmitHandler<Inputs> = (data)=>{
-    console.log(data);
     mutation.mutate(data);
   }
 

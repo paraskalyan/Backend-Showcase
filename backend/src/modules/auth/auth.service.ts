@@ -14,7 +14,6 @@ if (!JWT_SECRET) {
 
 export const signup = async (data: Signup) => {
   const { email, name, username, password } = data;
-  console.log(email, name, username, password)
   if (!email || !name || !username || !password) {
     throw new AppError("All fields are required", 400);
   }
