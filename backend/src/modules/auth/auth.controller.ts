@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import * as authService from "./auth.service.js";
+import { sendSuccess } from "../../utils/response.js";
 
 export const signup = async (
   req: Request,
@@ -27,6 +28,7 @@ export const login = async (
       sameSite: "strict",
       maxAge: 24 * 60 * 60 * 1000,
     });
+    return sendSuccess(res,token,"Login Successfull!", 200);
   } catch (error) {
     next(error);
   }
