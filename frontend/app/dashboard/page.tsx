@@ -3,8 +3,21 @@
 import { StatsOverview } from '@/components/dashboard/stats-overview';
 import { ProjectsList } from '@/components/dashboard/projects-list';
 import { RecentActivity } from '@/components/dashboard/recent-activity';
+import { useQuery } from '@tanstack/react-query';
+import { getAllProjects } from '@/API/ProjectAPIService';
+import PageLoader from '@/components/PageLoader';
+import { toast } from 'sonner';
 
 export default function DashboardPage() {
+  const {data, isLoading, isError, error} = useQuery({
+    queryKey: ['dashboardData'],
+    queryFn: () => getAllProjects(),
+    
+  })
+  
+  if(isLoading) return <PageLoader/>;
+  if(isError) return toast.error(error?.message);
+
   return (
     <main className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -22,7 +35,7 @@ export default function DashboardPage() {
           {/* Main Content Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
-              <ProjectsList />
+              <ProjectsList projects={data} />
             </div>
 
             {/* Recent Activity Sidebar */}

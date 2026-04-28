@@ -3,49 +3,49 @@
 import { Plus, Globe, Lock, ExternalLink, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-export function ProjectsList() {
-  const projects = [
-    {
-      id: 1,
-      name: 'E-commerce API',
-      description: 'RESTful API for online shopping platform',
-      endpoints: 12,
-      tests: 256,
-      visibility: 'Public',
-      techStack: ['Node.js', 'Express', 'PostgreSQL'],
-      successRate: 99.2,
-    },
-    {
-      id: 2,
-      name: 'User Authentication Service',
-      description: 'OAuth2 and JWT-based auth microservice',
-      endpoints: 8,
-      tests: 142,
-      visibility: 'Private',
-      techStack: ['Python', 'FastAPI', 'Redis'],
-      successRate: 98.8,
-    },
-    {
-      id: 3,
-      name: 'Real-time Chat API',
-      description: 'WebSocket-based messaging service',
-      endpoints: 15,
-      tests: 389,
-      visibility: 'Public',
-      techStack: ['Go', 'WebSocket', 'MongoDB'],
-      successRate: 99.5,
-    },
-    {
-      id: 4,
-      name: 'Payment Gateway',
-      description: 'Payment processing and transaction management',
-      endpoints: 10,
-      tests: 198,
-      visibility: 'Private',
-      techStack: ['Java', 'Spring Boot', 'MySQL'],
-      successRate: 99.9,
-    },
-  ];
+export function ProjectsList({projects}: any) {
+  // const projects = [
+  //   {
+  //     id: 1,
+  //     name: 'E-commerce API',
+  //     description: 'RESTful API for online shopping platform',
+  //     endpoints: 12,
+  //     tests: 256,
+  //     visibility: 'Public',
+  //     techStack: ['Node.js', 'Express', 'PostgreSQL'],
+  //     successRate: 99.2,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'User Authentication Service',
+  //     description: 'OAuth2 and JWT-based auth microservice',
+  //     endpoints: 8,
+  //     tests: 142,
+  //     visibility: 'Private',
+  //     techStack: ['Python', 'FastAPI', 'Redis'],
+  //     successRate: 98.8,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'Real-time Chat API',
+  //     description: 'WebSocket-based messaging service',
+  //     endpoints: 15,
+  //     tests: 389,
+  //     visibility: 'Public',
+  //     techStack: ['Go', 'WebSocket', 'MongoDB'],
+  //     successRate: 99.5,
+  //   },
+  //   {
+  //     id: 4,
+  //     name: 'Payment Gateway',
+  //     description: 'Payment processing and transaction management',
+  //     endpoints: 10,
+  //     tests: 198,
+  //     visibility: 'Private',
+  //     techStack: ['Java', 'Spring Boot', 'MySQL'],
+  //     successRate: 99.9,
+  //   },
+  // ];
 
   return (
     <div className="space-y-6">
@@ -58,7 +58,8 @@ export function ProjectsList() {
       </div>
 
       <div className="grid gap-4">
-        {projects.map((project) => (
+        {projects.length === 0 ? <div>No Projects</div> :
+        projects.length > 0 && projects.map((project: any) => (
           <div
             key={project.id}
             className="bg-card border border-border rounded-lg p-6 hover:border-accent/50 transition-colors"
