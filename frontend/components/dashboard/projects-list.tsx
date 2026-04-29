@@ -58,8 +58,8 @@ export function ProjectsList({projects}: any) {
       </div>
 
       <div className="grid gap-4">
-        {projects.length === 0 ? <div>No Projects</div> :
-        projects.length > 0 && projects.map((project: any) => (
+        {projects?.length === 0 ? <div>No Projects</div> :
+        projects?.length > 0 && projects?.map((project: any) => (
           <div
             key={project.id}
             className="bg-card border border-border rounded-lg p-6 hover:border-accent/50 transition-colors"
