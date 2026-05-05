@@ -11,6 +11,7 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
 enum Visibility {
   PRIVATE
   PUBLIC
@@ -32,63 +33,63 @@ enum ExecutionStatus {
 }
 
 model User {
-  id String  @id @default(uuid())
-  name String
-  email String  @unique
-  username String @unique
-  password String
-  createdAt DateTime @default(now())
-  Project Project?
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  username  String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  Project   Project[]
 }
 
 model Project {
-  id String @id @default(uuid())
-  name String
+  id          String     @id @default(uuid())
+  name        String
   description String
-  visibility Visibility @default(PUBLIC)
-  stack String[]
-  User User @relation(fields: [userId], references: [id])
-  userId String @unique
-  createdAt DateTime @default(now())
-  endpoints Endpoint[]
+  visibility  Visibility @default(PUBLIC)
+  stack       String[]
+  userId      String
+  User        User       @relation(fields: [userId], references: [id])
+  createdAt   DateTime   @default(now())
+  endpoints   Endpoint[]
 }
 
 model Endpoint {
-  id String @id @default(uuid())
-  name String
+  id          String         @id @default(uuid())
+  name        String
   description String
-  url String
-  method HttpMethod
-  headers Json?
-  body Json?
+  url         String
+  method      HttpMethod
+  headers     Json?
+  body        Json?
   queryParams Json?
-  projectId String
-  createdAt DateTime @default(now())
-  Project Project @relation(fields: [projectId], references: [id])
-  executions Execution[]
-  logs ExecutionLog[]
+  projectId   String
+  createdAt   DateTime       @default(now())
+  Project     Project        @relation(fields: [projectId], references: [id])
+  executions  Execution[]
+  logs        ExecutionLog[]
 }
 
-model Execution{
-  id String @id @default(uuid())
-  endpointId String
+model Execution {
+  id          String          @id @default(uuid())
+  endpointId  String
   triggeredBy String?
-  status ExecutionStatus
-  createdAt DateTime @default(now())
-  Endpoint Endpoint @relation(fields: [endpointId], references: [id])
-  logs ExecutionLog[]
+  status      ExecutionStatus
+  createdAt   DateTime        @default(now())
+  Endpoint    Endpoint        @relation(fields: [endpointId], references: [id])
+  logs        ExecutionLog[]
 }
 
-model ExecutionLog{
-  id String @id @default(uuid())
-  endpointId String
-  executionId String
-  status String
-  statusCode Int?
+model ExecutionLog {
+  id           String    @id @default(uuid())
+  endpointId   String
+  executionId  String
+  status       String
+  statusCode   Int?
   responseTime Int
-  response Json?
+  response     Json?
   errorMessage String?
-  createdAt DateTime @default(now())
-  Endpoint Endpoint @relation(fields: [endpointId], references: [id], onDelete: Cascade)
-  Execution Execution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+  createdAt    DateTime  @default(now())
+  Endpoint     Endpoint  @relation(fields: [endpointId], references: [id], onDelete: Cascade)
+  Execution    Execution @relation(fields: [executionId], references: [id], onDelete: Cascade)
 }
