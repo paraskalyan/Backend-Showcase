@@ -17,7 +17,7 @@ export const getProject = async (id: string) => {
 };
 
 export const createProject = async (data: CreateProjectData) => {
-  const project = await prisma.project.create({
+    const project = await prisma.project.create({
     data: {
       name: data.name,
       description: data.description,
@@ -25,21 +25,23 @@ export const createProject = async (data: CreateProjectData) => {
       stack: data.stack,
       userId: data.userId,
 
-      endpoints: {
-        create: data.endpoints.map((ep) => ({
-          name: ep.name,
-          description: ep.description,
-          url: ep.url,
-          method: ep.method,
-          headers: ep.headers,
-          body: ep.body,
-          queryParams: ep.queryParams,
-        })),
-      },
+      ...(data.endpoints && {
+        endpoints: {
+          create: data.endpoints.map((ep) => ({
+            name: ep.name,
+            description: ep.description,
+            url: ep.url,
+            method: ep.method,
+            headers: ep.headers,
+            body: ep.body,
+            queryParams: ep.queryParams,
+          })),
+        },
+      }),
     },
 
     include: {
-      endpoints: true, // return endpoints also
+      endpoints: true,
     },
   });
 
