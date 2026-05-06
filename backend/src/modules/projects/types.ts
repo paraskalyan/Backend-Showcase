@@ -15,5 +15,5 @@ export type CreateProjectData = {
     visibility: Visibility,
     stack: string[],
     userId: string,
-    endpoints: EndpointInput[],
+    endpoints?: EndpointInput[],
 }
