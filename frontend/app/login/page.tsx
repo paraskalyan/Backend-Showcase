@@ -29,6 +29,9 @@ export default function LoginPage() {
     onSuccess: (response)=> {
       toast.success(response?.data?.message);
       router.push('/dashboard');
+    },
+    onError : (error: string)=>{
+      toast.error(error);
     }
   })
 

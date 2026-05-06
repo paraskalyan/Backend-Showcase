@@ -45,6 +45,8 @@ apiClient.interceptors.response.use(
       message: error.response?.data?.message || error.message,
     });
 
-    return Promise.reject(error);
+    return Promise.reject(
+      error.response?.data?.message || error.message
+  );
   }
 );
