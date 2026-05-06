@@ -3,7 +3,7 @@
 import { Plus, Globe, Lock, ExternalLink, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-export function ProjectsList({projects}: any) {
+export function ProjectsList({projects, onCreateProject}: any) {
   // const projects = [
   //   {
   //     id: 1,
@@ -51,7 +51,7 @@ export function ProjectsList({projects}: any) {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-foreground">Your Projects</h2>
-        <Button className="bg-accent hover:bg-accent/90 text-accent-foreground">
+        <Button onClick={onCreateProject} className="bg-accent hover:bg-accent/90 text-accent-foreground">
           <Plus className="w-4 h-4 mr-2" />
           Create Project
         </Button>

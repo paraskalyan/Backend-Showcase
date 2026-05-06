@@ -84,19 +84,15 @@ export function CreateProjectModal({
     }
 
     setIsSubmitting(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      onCreateProject(formData);
-      setFormData({
-        name: '',
-        description: '',
-        visibility: 'Private',
-        techStack: [],
-      });
-      setIsSubmitting(false);
-      onClose();
-    }, 500);
+    await onCreateProject(formData);
+    setFormData({
+      name: '',
+      description: '',
+      visibility: 'Private',
+      techStack: [],
+    });
+    setIsSubmitting(false);
+    onClose();
   };
 
   if (!isOpen) return null;

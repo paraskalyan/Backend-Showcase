@@ -3,17 +3,30 @@
 import { StatsOverview } from '@/components/dashboard/stats-overview';
 import { ProjectsList } from '@/components/dashboard/projects-list';
 import { RecentActivity } from '@/components/dashboard/recent-activity';
-import { useQuery } from '@tanstack/react-query';
-import { getAllProjects } from '@/API/ProjectAPIService';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { createProject, getAllProjects } from '@/API/ProjectAPIService';
 import PageLoader from '@/components/PageLoader';
 import { toast } from 'sonner';
+import { CreateProjectModal } from '@/components/dashboard/CreateProjectModal';
+import { useState } from 'react';
+import { Project } from '@/constants/types';
 
 export default function DashboardPage() {
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const {data, isLoading, isError, error} = useQuery({
     queryKey: ['dashboardData'],
     queryFn: () => getAllProjects(),
     
   })
+
+  const mutation = useMutation({
+    mutationFn: (data: Project)=> createProject(data),
+  })
+
+  const handleCreateProject = (data: Project)=>{
+    console.log("Data, ", data)
+    mutation.mutate(data)
+  }
   
   if(isLoading) return <PageLoader/>;
   if(isError) return toast.error(error?.message);
@@ -35,7 +48,7 @@ export default function DashboardPage() {
           {/* Main Content Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
-              <ProjectsList projects={data} />
+              <ProjectsList onCreateProject={()=> setIsCreateModalOpen(true)} projects={data} />
             </div>
 
             {/* Recent Activity Sidebar */}
@@ -45,6 +58,11 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+       <CreateProjectModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onCreateProject={handleCreateProject}
+      />
     </main>
   );
 }
