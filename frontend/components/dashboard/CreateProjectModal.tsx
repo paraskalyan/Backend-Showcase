@@ -10,8 +10,8 @@ interface CreateProjectModalProps {
   onCreateProject: (projectData: {
     name: string;
     description: string;
-    visibility: 'Public' | 'Private';
-    techStack: string[];
+    visibility: 'PUBLIC' | 'PRIVATE';
+    stack: string[];
   }) => void;
 }
 
@@ -44,8 +44,8 @@ export function CreateProjectModal({
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    visibility: 'Private' as 'Public' | 'Private',
-    techStack: [] as string[],
+    visibility: 'PRIVATE' as 'PUBLIC' | 'PRIVATE',
+    stack: [] as string[],
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -59,7 +59,7 @@ export function CreateProjectModal({
     }));
   };
 
-  const handleVisibilityChange = (visibility: 'Public' | 'Private') => {
+  const handleVisibilityChange = (visibility: 'PUBLIC' | 'PRIVATE') => {
     setFormData((prev) => ({
       ...prev,
       visibility,
@@ -69,9 +69,9 @@ export function CreateProjectModal({
   const handleTechStackToggle = (tech: string) => {
     setFormData((prev) => ({
       ...prev,
-      techStack: prev.techStack.includes(tech)
-        ? prev.techStack.filter((t) => t !== tech)
-        : [...prev.techStack, tech],
+      stack: prev.stack.includes(tech)
+        ? prev.stack.filter((t) => t !== tech)
+        : [...prev.stack, tech],
     }));
   };
 
@@ -88,8 +88,8 @@ export function CreateProjectModal({
     setFormData({
       name: '',
       description: '',
-      visibility: 'Private',
-      techStack: [],
+      visibility: 'PRIVATE',
+      stack: [],
     });
     setIsSubmitting(false);
     onClose();
@@ -155,29 +155,29 @@ export function CreateProjectModal({
             <div className="flex gap-3">
               <button
                 type="button"
-                onClick={() => handleVisibilityChange('Private')}
+                onClick={() => handleVisibilityChange('PRIVATE')}
                 disabled={isSubmitting}
                 className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
-                  formData.visibility === 'Private'
+                  formData.visibility === 'PRIVATE'
                     ? 'bg-accent/10 border-accent text-accent'
                     : 'border-border text-muted-foreground hover:border-accent/50'
                 }`}
               >
                 <Lock className="w-4 h-4" />
-                <span>Private</span>
+                <span>PRIVATE</span>
               </button>
               <button
                 type="button"
-                onClick={() => handleVisibilityChange('Public')}
+                onClick={() => handleVisibilityChange('PUBLIC')}
                 disabled={isSubmitting}
                 className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
-                  formData.visibility === 'Public'
+                  formData.visibility === 'PUBLIC'
                     ? 'bg-accent/10 border-accent text-accent'
                     : 'border-border text-muted-foreground hover:border-accent/50'
                 }`}
               >
                 <Globe className="w-4 h-4" />
-                <span>Public</span>
+                <span>PUBLIC</span>
               </button>
             </div>
           </div>

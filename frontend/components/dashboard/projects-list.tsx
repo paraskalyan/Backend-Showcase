@@ -95,7 +95,7 @@ export function ProjectsList({projects, onCreateProject}: any) {
             </div>
 
             <div className="flex flex-wrap gap-2 mb-4">
-              {project.techStack.map((tech, idx) => (
+              {project.stack.map((tech: string, idx: number) => (
                 <span
                   key={idx}
                   className="px-3 py-1 rounded bg-muted text-muted-foreground text-xs font-medium"
