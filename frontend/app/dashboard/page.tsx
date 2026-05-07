@@ -3,7 +3,7 @@
 import { StatsOverview } from '@/components/dashboard/stats-overview';
 import { ProjectsList } from '@/components/dashboard/projects-list';
 import { RecentActivity } from '@/components/dashboard/recent-activity';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createProject, getAllProjects } from '@/API/ProjectAPIService';
 import PageLoader from '@/components/PageLoader';
 import { toast } from 'sonner';
@@ -12,15 +12,21 @@ import { useState } from 'react';
 import { Project } from '@/constants/types';
 
 export default function DashboardPage() {
+  const queryClient = useQueryClient();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const {data, isLoading, isError, error} = useQuery({
-    queryKey: ['dashboardData'],
+  const {data, isLoading, isError, error, isFetching, isRefetching} = useQuery({
+    queryKey: ['projects'],
     queryFn: () => getAllProjects(),
     
   })
 
   const mutation = useMutation({
     mutationFn: (data: Project)=> createProject(data),
+    onSuccess: ()=> {
+      queryClient.invalidateQueries({
+        queryKey: ['projects']
+      })
+    }
   })
 
   const handleCreateProject = (data: Project)=>{
