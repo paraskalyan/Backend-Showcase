@@ -1,12 +1,13 @@
 import express from 'express';
 import { createProject, deleteProject, getAllProjects, getProject, updateProject } from './projects.controller.js';
+import { verifyUser } from '../../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
-router.get('/', getAllProjects);
-router.get('/:id', getProject);
-router.post('/', createProject);
-router.patch('/', updateProject);
-router.delete('/', deleteProject);
+router.get('/', verifyUser ,getAllProjects);
+router.get('/:id', verifyUser ,getProject);
+router.post('/', verifyUser ,createProject);
+router.patch('/', verifyUser ,updateProject);
+router.delete('/', verifyUser ,deleteProject);
 
 export default router;

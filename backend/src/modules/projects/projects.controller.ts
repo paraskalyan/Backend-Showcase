@@ -46,7 +46,8 @@ export const createProject = async (
   next: NextFunction,
 ) => {
   try {
-    const project = await projectService.createProject(req.body);
+    const userId = req.user.id;
+    const project = await projectService.createProject(req.body, userId);
     return sendSuccess(res, project, "Project created successfully", 201);
   } catch (error) {
     next(error);

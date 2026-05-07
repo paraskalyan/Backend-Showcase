@@ -5,17 +5,19 @@ import endpointRoutes from './modules/endpoint/endpoint.routes.js';
 import { errorHandler } from './middlewares/error.middleware.js';
 import { AppError } from './utils/AppError.js';
 import cors from 'cors'
+import cookieParser from 'cookie-parser';
 import { verifyUser } from './middlewares/auth.middleware.js';
 const app = express();
 const PORT = 4000;
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(cors({
   origin: 'http://localhost:3000',
   credentials: true,  
 }))
 app.use('/api/auth', authRoutes);
-app.use('/api/project', verifyUser, projectRoutes);
+app.use('/api/project', projectRoutes);
 app.use('/api/endpoint', endpointRoutes);
 
 app.use((req, res, next) => {
