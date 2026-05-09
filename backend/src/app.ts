@@ -2,11 +2,12 @@ import express from 'express';
 import authRoutes from './modules/auth/auth.routes.js';
 import projectRoutes from './modules/projects/projects.routes.js';
 import endpointRoutes from './modules/endpoint/endpoint.routes.js';
+import dashboardRoutes from './modules/dashboard/dashboard.routes.js';
 import { errorHandler } from './middlewares/error.middleware.js';
 import { AppError } from './utils/AppError.js';
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
-import { verifyUser } from './middlewares/auth.middleware.js';
+
 const app = express();
 const PORT = 4000;
 
@@ -19,6 +20,7 @@ app.use(cors({
 app.use('/api/auth', authRoutes);
 app.use('/api/project', projectRoutes);
 app.use('/api/endpoint', endpointRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 app.use((req, res, next) => {
   next(new AppError(`Route ${req.originalUrl} not found`, 404));
