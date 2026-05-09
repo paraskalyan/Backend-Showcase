@@ -16,14 +16,14 @@ export const getProject = async (id: string) => {
   return project;
 };
 
-export const createProject = async (data: CreateProjectData) => {
+export const createProject = async (data: CreateProjectData, userId: string) => {
     const project = await prisma.project.create({
     data: {
       name: data.name,
       description: data.description,
       visibility: data.visibility,
       stack: data.stack,
-      userId: data.userId,
+      userId,
 
       ...(data.endpoints && {
         endpoints: {
