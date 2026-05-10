@@ -36,4 +36,12 @@ export const getDashboardStats = async (userId: string) => {
 
   const successRate =
     totalExecutions === 0 ? 0 : (successfulExecutions / totalExecutions) * 100;
+
+   return {
+    totalProjects: totalProjects,
+    totalEndpoints: totalEndpoints,
+    totalExecutions: totalExecutions,
+    successRate: successRate,
+   } 
+
 };
