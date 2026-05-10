@@ -2,32 +2,32 @@
 
 import { BarChart3, Zap, Activity, TrendingUp } from 'lucide-react';
 
-export function StatsOverview() {
+export function StatsOverview({data}: any) {
   const stats = [
     {
       label: 'Total Projects',
-      value: '12',
+      value: data?.totalProjects,
       change: '+2 this month',
       icon: BarChart3,
       color: 'bg-blue-500/10 text-blue-400',
     },
     {
       label: 'Total Endpoints',
-      value: '47',
+      value: data?.totalEndpoints,
       change: '+8 this month',
       icon: Zap,
       color: 'bg-emerald-500/10 text-emerald-400',
     },
     {
       label: 'API Tests',
-      value: '1.2K',
+      value: data?.totalExecutions,
       change: '+240 this week',
       icon: Activity,
       color: 'bg-purple-500/10 text-purple-400',
     },
     {
       label: 'Success Rate',
-      value: '98.5%',
+      value: data?.successRate,
       change: '+0.5% from last week',
       icon: TrendingUp,
       color: 'bg-pink-500/10 text-pink-400',

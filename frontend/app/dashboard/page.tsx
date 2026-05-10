@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import { CreateProjectModal } from '@/components/dashboard/CreateProjectModal';
 import { useState } from 'react';
 import { Project } from '@/constants/types';
+import { getDashboardStats } from '@/API/DashboardAPIService';
 
 export default function DashboardPage() {
   const queryClient = useQueryClient();
@@ -18,6 +19,11 @@ export default function DashboardPage() {
     queryKey: ['projects'],
     queryFn: () => getAllProjects(),
     
+  })
+
+  const {data: dashboardData, isLoading: dashLoading, isError: dashError} = useQuery({
+    queryKey: ['dashboardData'],
+    queryFn: () => getDashboardStats(),
   })
 
   const mutation = useMutation({
@@ -49,7 +55,7 @@ export default function DashboardPage() {
 
         <div className="space-y-8">
           {/* Stats Overview */}
-          <StatsOverview />
+          <StatsOverview data={dashboardData} />
 
           {/* Main Content Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
