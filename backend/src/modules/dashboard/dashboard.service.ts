@@ -16,8 +16,8 @@ export const getDashboardStats = async (userId: string) => {
   const successfulExecutions = await prisma.execution.count({
     where: {
       status: "SUCCESS",
-      endpoint: {
-        project: {
+      Endpoint: {
+        Project: {
           userId,
         },
       },

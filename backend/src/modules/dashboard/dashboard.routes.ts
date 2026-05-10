@@ -3,6 +3,6 @@ import { getDashboardStats } from "./dashboard.controller.js";
 
 const router = express.Router();
 
-router.post("/stats", getDashboardStats);
+router.get("/stats", getDashboardStats);
 
 export default router;
