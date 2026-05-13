@@ -2,8 +2,10 @@
 
 import { Plus, Globe, Lock, ExternalLink, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 export function ProjectsList({projects, onCreateProject}: any) {
+  const router = useRouter();
   // const projects = [
   //   {
   //     id: 1,
@@ -122,7 +124,7 @@ export function ProjectsList({projects, onCreateProject}: any) {
                   </p>
                 </div>
               </div>
-              <Button variant="ghost" size="sm" className="text-accent hover:text-accent/80">
+              <Button onClick={()=> router.push(`/dashboard/project/${project?.id}`)} variant="ghost" size="sm" className="text-accent hover:text-accent/80">
                 View Project
                 <ExternalLink className="w-4 h-4 ml-2" />
               </Button>
