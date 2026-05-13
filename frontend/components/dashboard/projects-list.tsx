@@ -72,12 +72,12 @@ export function ProjectsList({projects, onCreateProject}: any) {
                   </h3>
                   <span
                     className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium ${
-                      project.visibility === 'Public'
+                      project.visibility === 'PUBLIC'
                         ? 'bg-emerald-500/10 text-emerald-400'
                         : 'bg-red-500/10 text-red-400'
                     }`}
                   >
-                    {project.visibility === 'Public' ? (
+                    {project.visibility === 'PUBLIC' ? (
                       <Globe className="w-3 h-3" />
                     ) : (
                       <Lock className="w-3 h-3" />
