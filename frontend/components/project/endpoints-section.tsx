@@ -59,7 +59,7 @@ export function EndpointsSection({ projectId, endpoints }: EndpointsSectionProps
             {endpoints.length} endpoint{endpoints.length !== 1 ? 's' : ''} configured
           </p>
         </div>
-        <Link href={`/dashboard/projects/${projectId}/endpoints/new`}>
+        <Link href={`/dashboard/project/${projectId}/endpoints/new`}>
           <Button>
             <Plus className="h-4 w-4" />
             Add Endpoint

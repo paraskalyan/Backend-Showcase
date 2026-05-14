@@ -20,7 +20,7 @@ export default function ProjectDetailPage() {
 
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background mx-[10%]">
       <ProjectHeader
         projectName={data.name}
         description={data.description}
