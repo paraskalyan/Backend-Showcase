@@ -8,7 +8,8 @@ export const getAllProjects = async () =>{
 }
 
 export const createProject = async (data: Project)=>{
-   const response = await apiClient.post(API_ROUTES.PROJECTS, data)
+   const response = await apiClient.post(API_ROUTES.PROJECTS, data);
+   return response.data.data;
 }
 
 export const getProject = async (id: string)=>{
