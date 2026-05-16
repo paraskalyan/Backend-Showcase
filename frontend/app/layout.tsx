@@ -4,7 +4,6 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Providers from "./providers";
 import { Toaster } from "sonner";
-import { Header } from "@/components/landing/header";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -41,7 +40,6 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full flex flex-col">
-        {/* <Header/> */}
         <Providers>{children}</Providers>
         <Toaster/>
       </body>
