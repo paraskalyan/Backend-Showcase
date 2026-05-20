@@ -19,6 +19,7 @@ interface Endpoint {
 interface EndpointsSectionProps {
   projectId: string;
   endpoints: Endpoint[];
+  onAddEndpoint: () => void;
 }
 
 const methodColors: Record<string, string> = {
@@ -29,7 +30,7 @@ const methodColors: Record<string, string> = {
   PATCH: 'bg-purple-500/20 text-purple-300',
 };
 
-export function EndpointsSection({ projectId, endpoints }: EndpointsSectionProps) {
+export function EndpointsSection({ projectId, endpoints, onAddEndpoint }: EndpointsSectionProps) {
   if (endpoints.length === 0) {
     return (
       <div className="p-8">
@@ -38,12 +39,10 @@ export function EndpointsSection({ projectId, endpoints }: EndpointsSectionProps
           title="No Endpoints Yet"
           description="Start building your API by adding your first endpoint"
           action={
-            <Link href={`/dashboard/projects/${projectId}/endpoints/new`}>
-              <Button>
-                <Plus className="h-4 w-4" />
-                Add Your First Endpoint
-              </Button>
-            </Link>
+            <Button onClick={onAddEndpoint}>
+              <Plus className="h-4 w-4" />
+              Add Your First Endpoint
+            </Button>
           }
         />
       </div>
@@ -59,12 +58,10 @@ export function EndpointsSection({ projectId, endpoints }: EndpointsSectionProps
             {endpoints.length} endpoint{endpoints.length !== 1 ? 's' : ''} configured
           </p>
         </div>
-        <Link href={`/dashboard/project/${projectId}/endpoints/new`}>
-          <Button>
-            <Plus className="h-4 w-4" />
-            Add Endpoint
-          </Button>
-        </Link>
+        <Button onClick={onAddEndpoint}>
+          <Plus className="h-4 w-4" />
+          Add Endpoint
+        </Button>
       </div>
 
       <div className="space-y-2">
