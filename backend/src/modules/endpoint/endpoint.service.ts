@@ -4,7 +4,7 @@ type EndpointInput = {
   name: string;
   description: string;
   url: string;
-  method: "GET" | "POST" | "PUT" | "DELETE";
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   headers?: any;
   body?: any;
   queryParams?: any;
