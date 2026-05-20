@@ -18,7 +18,7 @@ interface AddEndpointModalProps {
   }) => void;
 }
 
-const HTTP_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
+const HTTP_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
 
 export function AddEndpointModal({
   isOpen,
@@ -131,6 +131,8 @@ export function AddEndpointModal({
         queryParams,
         body,
       };
+
+      console.log(endpointData)
 
       onAddEndpoint(endpointData);
       
