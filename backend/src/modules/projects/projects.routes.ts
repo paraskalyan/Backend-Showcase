@@ -8,6 +8,6 @@ router.get('/', verifyUser ,getAllProjects);
 router.get('/:id', verifyUser ,getProject);
 router.post('/', verifyUser ,createProject);
 router.patch('/', verifyUser ,updateProject);
-router.delete('/', verifyUser ,deleteProject);
+router.delete('/:id', verifyUser ,deleteProject);
 
 export default router;
