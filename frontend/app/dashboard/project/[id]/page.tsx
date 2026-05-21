@@ -42,6 +42,10 @@ export default function ProjectDetailPage() {
     setIsAddEndpointModalOpen(false);
   };
 
+  const handleDeleteProject = () => {
+    deleteMutation.mutate(String(id));
+  }
+
   if (isLoading || endpointsLoading) return <PageLoader />;
 
   return (
@@ -51,6 +55,7 @@ export default function ProjectDetailPage() {
         description={data.description}
         visibility={data.visibility}
         createdAt={data.createdAt}
+        onDeleteProject={handleDeleteProject}
       />
       <EndpointsSection
         projectId={data.id}

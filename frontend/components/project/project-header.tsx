@@ -10,6 +10,7 @@ interface ProjectHeaderProps {
   description: string;
   visibility: 'public' | 'private';
   createdAt: string;
+  onDeleteProject: () => void;
 }
 
 export function ProjectHeader({
@@ -17,6 +18,7 @@ export function ProjectHeader({
   description,
   visibility,
   createdAt,
+  onDeleteProject,
 }: ProjectHeaderProps) {
   return (
     <div className="border-b border-border bg-card p-6">
@@ -55,7 +57,7 @@ export function ProjectHeader({
             <Edit2 className="h-4 w-4" />
             Edit
           </Button>
-          <Button variant="outline" size="sm" className="text-destructive hover:bg-destructive/10">
+          <Button onClick={onDeleteProject} variant="outline" size="sm" className="text-destructive hover:bg-destructive/10">
             <Trash2 className="h-4 w-4" />
             Delete
           </Button>
