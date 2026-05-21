@@ -2,7 +2,7 @@
 import { ProjectHeader } from "@/components/project/project-header";
 import { EndpointsSection } from "@/components/project/endpoints-section";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getProject } from "@/API/ProjectAPIService";
+import { deleteProject, getProject } from "@/API/ProjectAPIService";
 import PageLoader from "@/components/PageLoader";
 import { useParams } from "next/navigation";
 import { mockEndpoints } from "@/helpers/mockData";
@@ -30,6 +30,10 @@ export default function ProjectDetailPage() {
 
   const mutation = useMutation({
     mutationFn: (data: EndpointData)=>  createEndpoint(data)
+  })
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => deleteProject(id)
   })
 
   const handleAddEndpoint = (endpointData: EndpointData) => {
