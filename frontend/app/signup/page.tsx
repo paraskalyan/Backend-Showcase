@@ -10,6 +10,8 @@ import { Terminal, ArrowLeft, Eye, EyeOff, Check } from "lucide-react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useMutation } from "@tanstack/react-query"
 import { signup } from "@/API/AuthAPIService"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 const passwordRequirements = [
   { label: "At least 8 characters", test: (p: string) => p.length >= 8 },
@@ -31,14 +33,19 @@ type Inputs= {
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const {register, handleSubmit, watch} = useForm<Inputs>();
   const password = watch('password');
   const confirmPassword = watch('confirmPassword');
 
-  const mutation = useMutation({
-    mutationFn: (data: Inputs) => signup(data)
+  const {mutate, isPending} = useMutation({
+    mutationFn: (data: Inputs) => signup(data),
+    onSuccess: (response) =>{
+      toast.success(response?.data?.message || 'Signup Successfull');
+      router.push('/login');
+    } 
   })
 
   const onSubmit: SubmitHandler<Inputs> = (data)=>{
@@ -47,11 +54,10 @@ export default function SignupPage() {
       ...rest,
       name: data.firstName + " " + data.lastName,
     }
-    console.log(newuser)
-    mutation.mutate(newuser)
+    mutate(newuser);
   }
 
-  const passwordsMatch = password === confirmPassword && confirmPassword?.length > 0
+  const passwordsMatch = password === confirmPassword && confirmPassword?.length > 0;
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -319,9 +325,9 @@ export default function SignupPage() {
             <Button
               type="submit"
               className="w-full h-11 bg-accent text-accent-foreground hover:bg-accent/90"
-              disabled={isLoading || !passwordsMatch}
+              disabled={isPending || !passwordsMatch}
             >
-              {isLoading ? (
+              {isPending ? (
                 <div className="flex items-center gap-2">
                   <div className="h-4 w-4 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
                   Creating account...
