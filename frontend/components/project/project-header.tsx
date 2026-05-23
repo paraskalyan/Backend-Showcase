@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, Edit2, Trash2 } from 'lucide-react';
+import CommonDialog from '../CommonDialog';
 
 interface ProjectHeaderProps {
   projectName: string;
@@ -57,10 +58,19 @@ export function ProjectHeader({
             <Edit2 className="h-4 w-4" />
             Edit
           </Button>
-          <Button onClick={onDeleteProject} variant="outline" size="sm" className="text-destructive hover:bg-destructive/10">
-            <Trash2 className="h-4 w-4" />
-            Delete
-          </Button>
+          <CommonDialog
+            trigger={
+            <Button variant="outline" size="sm" className="text-destructive hover:bg-destructive/10">
+              <Trash2 className="h-4 w-4" />
+              Delete
+            </Button>
+            }
+            title="Confirm Delete Project"
+            description="This action cannot be undone."
+            confirmText="Delete"
+            onConfirm={onDeleteProject}
+            variant='destructive'
+          />
         </div>
       </div>
     </div>

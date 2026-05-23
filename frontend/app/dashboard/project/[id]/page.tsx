@@ -51,14 +51,14 @@ export default function ProjectDetailPage() {
   return (
     <main className="min-h-screen bg-background mx-[10%]">
       <ProjectHeader
-        projectName={data.name}
-        description={data.description}
-        visibility={data.visibility}
-        createdAt={data.createdAt}
+        projectName={data?.name}
+        description={data?.description}
+        visibility={data?.visibility}
+        createdAt={data?.createdAt}
         onDeleteProject={handleDeleteProject}
       />
       <EndpointsSection
-        projectId={data.id}
+        projectId={data?.id}
         endpoints={endpointsData.data}
         onAddEndpoint={() => setIsAddEndpointModalOpen(true)}
       />
