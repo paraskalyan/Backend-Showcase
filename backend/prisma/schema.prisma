@@ -65,7 +65,7 @@ model Endpoint {
   queryParams Json?
   projectId   String
   createdAt   DateTime       @default(now())
-  Project     Project        @relation(fields: [projectId], references: [id])
+  Project     Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
   executions  Execution[]
   logs        ExecutionLog[]
 }
