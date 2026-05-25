@@ -10,3 +10,8 @@ export const getEndpoints = async (id: string)=> {
     const response = await apiClient.get(`${API_ROUTES.ENDPOINT}?projectId=${id}`);
     return response.data;
 }
+
+export const deleteEndpoint = async (id: string)=>{
+   const response = await apiClient.delete(`${API_ROUTES.ENDPOINT}/${id}`);
+   return response.data;
+}
