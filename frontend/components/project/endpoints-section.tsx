@@ -31,23 +31,23 @@ const methodColors: Record<string, string> = {
 };
 
 export function EndpointsSection({ projectId, endpoints, onAddEndpoint }: EndpointsSectionProps) {
-  if (endpoints.length === 0) {
-    return (
-      <div className="p-8">
-        <Empty
-          icon="code"
-          title="No Endpoints Yet"
-          description="Start building your API by adding your first endpoint"
-          action={
-            <Button onClick={onAddEndpoint}>
-              <Plus className="h-4 w-4" />
-              Add Your First Endpoint
-            </Button>
-          }
-        />
-      </div>
-    );
-  }
+  // if (endpoints.length === 0) {
+  //   return (
+  //     <div className="p-8">
+  //       <Empty
+  //         icon="code"
+  //         title="No Endpoints Yet"
+  //         description="Start building your API by adding your first endpoint"
+  //         action={
+  //           <Button onClick={onAddEndpoint}>
+  //             <Plus className="h-4 w-4" />
+  //             Add Your First Endpoint
+  //           </Button>
+  //         }
+  //       />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="space-y-4 p-6">
