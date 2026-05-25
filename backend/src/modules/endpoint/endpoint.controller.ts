@@ -72,7 +72,7 @@ export const deleteEndpoint = async (
     }
 
     await endpointService.deleteEndpoint(id);
-    return sendSuccess(res, {}, "Endpoint deleted successfully", 204);
+    return sendSuccess(res, {}, "Endpoint deleted successfully", 200);
   } catch (error) {
     next(error);
   }

@@ -7,6 +7,6 @@ router.get('/', getAllEndpoints);
 // router.get('/:id', getProject);
 router.post('/', createEndpoint);
 router.patch('/', updateEndpoint);
-router.delete('/', deleteEndpoint);
+router.delete('/:id', deleteEndpoint);
 
 export default router;
