@@ -1,7 +1,7 @@
 "use client";
 import { ProjectHeader } from "@/components/project/project-header";
 import { EndpointsSection } from "@/components/project/endpoints-section";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteProject, getProject } from "@/API/ProjectAPIService";
 import PageLoader from "@/components/PageLoader";
 import { useParams } from "next/navigation";
@@ -10,9 +10,12 @@ import { AddEndpointModal } from "@/components/project/AddEndpointModal";
 import { useState } from "react";
 import { createEndpoint, getEndpoints } from "@/API/EndpointAPIService";
 import { EndpointData } from "@/constants/types";
+import { toast } from "sonner";
 
 export default function ProjectDetailPage() {
   const [isAddEndpointModalOpen, setIsAddEndpointModalOpen] = useState(false);
+
+  const queryClient = useQueryClient();
 
   const { id } = useParams();
 
@@ -21,30 +24,35 @@ export default function ProjectDetailPage() {
     queryFn: () => getProject(String(id)),
   });
 
-  const {data: endpointsData, isLoading: endpointsLoading} = useQuery({
-    queryKey: ["endpoints", id],
-    queryFn: ()=> getEndpoints(String(id))
-  })
+  const { data: endpointsData, isLoading: endpointsLoading } = useQuery({
+    queryKey: ["endpoints", String(id)],
+    queryFn: () => getEndpoints(String(id)),
+  });
 
-  console.log(endpointsData)
 
   const mutation = useMutation({
-    mutationFn: (data: EndpointData)=>  createEndpoint(data)
-  })
+    mutationFn: (data: EndpointData) => createEndpoint(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["endpoints", String(id)],
+      });
+      toast.success("Endpoint created");
+    },
+  });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: string) => deleteProject(id)
-  })
+    mutationFn: (id: string) => deleteProject(id),
+  });
 
   const handleAddEndpoint = (endpointData: EndpointData) => {
     endpointData.projectId = String(id);
-    mutation.mutate(endpointData)
+    mutation.mutate(endpointData);
     setIsAddEndpointModalOpen(false);
   };
 
   const handleDeleteProject = () => {
     deleteMutation.mutate(String(id));
-  }
+  };
 
   if (isLoading || endpointsLoading) return <PageLoader />;
 
