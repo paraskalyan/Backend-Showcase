@@ -20,6 +20,7 @@ interface EndpointsSectionProps {
   projectId: string;
   endpoints: Endpoint[];
   onAddEndpoint: () => void;
+  onDeleteEndpoint : (id: string) => void
 }
 
 const methodColors: Record<string, string> = {
@@ -30,7 +31,7 @@ const methodColors: Record<string, string> = {
   PATCH: 'bg-purple-500/20 text-purple-300',
 };
 
-export function EndpointsSection({ projectId, endpoints, onAddEndpoint }: EndpointsSectionProps) {
+export function EndpointsSection({ projectId, endpoints, onAddEndpoint, onDeleteEndpoint }: EndpointsSectionProps) {
   // if (endpoints.length === 0) {
   //   return (
   //     <div className="p-8">
@@ -64,7 +65,7 @@ export function EndpointsSection({ projectId, endpoints, onAddEndpoint }: Endpoi
         </Button>
       </div>
 
-      <div className="space-y-2">
+      <div className=" space-y-4">
         {endpoints.map((endpoint) => (
           <Link key={endpoint.id} href={`/dashboard/projects/${projectId}/endpoints/${endpoint.id}`}>
             <div className="border border-border rounded-lg p-4 hover:bg-muted/50 transition-colors cursor-pointer group">
@@ -140,7 +141,7 @@ export function EndpointsSection({ projectId, endpoints, onAddEndpoint }: Endpoi
                   className="h-7 text-destructive hover:bg-destructive/10"
                   onClick={(e) => {
                     e.preventDefault();
-                    // Delete endpoint
+                    onDeleteEndpoint(endpoint.id)
                   }}
                 >
                   <Trash2 className="h-3.5 w-3.5" />

@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 import { mockEndpoints } from "@/helpers/mockData";
 import { AddEndpointModal } from "@/components/project/AddEndpointModal";
 import { useState } from "react";
-import { createEndpoint, getEndpoints } from "@/API/EndpointAPIService";
+import { createEndpoint, deleteEndpoint, getEndpoints } from "@/API/EndpointAPIService";
 import { EndpointData } from "@/constants/types";
 import { toast } from "sonner";
 
@@ -32,16 +32,26 @@ export default function ProjectDetailPage() {
 
   const mutation = useMutation({
     mutationFn: (data: EndpointData) => createEndpoint(data),
-    onSuccess: () => {
+    onSuccess: (response) => {
       queryClient.invalidateQueries({
         queryKey: ["endpoints", String(id)],
       });
-      toast.success("Endpoint created");
+      toast.success(response?.message);
     },
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => deleteProject(id),
+  });
+
+  const {mutate: mutateDeleteEndpoint} = useMutation({
+    mutationFn: (id: string) => deleteEndpoint(id),
+    onSuccess: (response) => {
+      queryClient.invalidateQueries({
+        queryKey: ["endpoints", String(id)]
+      });
+      toast.success(response?.message);
+    }
   });
 
   const handleAddEndpoint = (endpointData: EndpointData) => {
@@ -53,6 +63,11 @@ export default function ProjectDetailPage() {
   const handleDeleteProject = () => {
     deleteMutation.mutate(String(id));
   };
+
+  const handleDeleteEndpoint = (id : string) => {
+    console.log("sdfsdgsg")
+    mutateDeleteEndpoint(id);
+  }
 
   if (isLoading || endpointsLoading) return <PageLoader />;
 
@@ -69,6 +84,7 @@ export default function ProjectDetailPage() {
         projectId={data?.id}
         endpoints={endpointsData.data}
         onAddEndpoint={() => setIsAddEndpointModalOpen(true)}
+        onDeleteEndpoint={handleDeleteEndpoint}
       />
       <AddEndpointModal
         isOpen={isAddEndpointModalOpen}
