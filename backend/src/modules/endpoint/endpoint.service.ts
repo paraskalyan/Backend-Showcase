@@ -20,6 +20,12 @@ export const getAllEndpoints = async (projectId: string) => {
   });
 };
 
+export const getEndpoint = async (id: string) => {
+  return prisma.endpoint.findUnique({
+    where: { id },
+  });
+};
+
 export const createEndpoint = async (data: EndpointInput) => {
   return prisma.endpoint.create({
     data: {
