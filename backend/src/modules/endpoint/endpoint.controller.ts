@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import * as endpointService from "./endpoint.service.js";
-import { sendSuccess } from "../../utils/response.js";
+import { sendError, sendSuccess } from "../../utils/response.js";
 export const getAllEndpoints = async (
   req: Request,
   res: Response,
@@ -18,6 +18,30 @@ export const getAllEndpoints = async (
     const endpoints = await endpointService.getAllEndpoints(projectId);
 
     return sendSuccess(res, endpoints, "Endpoints fetched successfully", 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getEndpoint = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+
+    if (!id || Array.isArray(id) || typeof id !== "string") {
+      return res.status(400).json({
+        error: { message: "Invalid Endpoint Id" },
+      });
+    }
+
+    const endpoint = await endpointService.getEndpoint(id);
+    if(!endpoint){
+      return sendError(res, 'Endpoint not found', 404);
+    }
+    return sendSuccess(res, endpoint, "Endpoints fetched successfully", 200);
   } catch (error) {
     next(error);
   }
