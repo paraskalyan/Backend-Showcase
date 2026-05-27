@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Empty } from '@/components/ui/empty';
 import { Plus, Play, Copy, Trash2 } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface Endpoint {
   id: string;
@@ -49,6 +50,9 @@ export function EndpointsSection({ projectId, endpoints, onAddEndpoint, onDelete
   //     </div>
   //   );
   // }
+
+  const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <div className="space-y-4 p-6">
@@ -129,7 +133,7 @@ export function EndpointsSection({ projectId, endpoints, onAddEndpoint, onDelete
                   className="h-7"
                   onClick={(e) => {
                     e.preventDefault();
-                    // Test endpoint
+                    router.push(`${pathname}/endpoints/${endpoint.id}`)
                   }}
                 >
                   <Play className="h-3.5 w-3.5" />
