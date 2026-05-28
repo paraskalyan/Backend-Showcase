@@ -9,11 +9,12 @@ export const runExecution = async (
 ) => {
   try {
     const { endpointId } = req.body;
+    const { id } = req.user;
     if (!endpointId) {
       return sendError(res, "EndpointId is required", 400);
     }
 
-    const result = await executionService.runExecution(endpointId);
+    const result = await executionService.runExecution(endpointId, id);
 
     return sendSuccess(res, result, "", 200);
   } catch (err) {
