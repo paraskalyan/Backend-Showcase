@@ -5,5 +5,6 @@ export const API_ROUTES = {
     PROJECTS : '/project',
 
     DASHBOARD: '/dashboard/stats',
-    ENDPOINT: '/endpoint'
+    ENDPOINT: '/endpoint',
+    EXECUTION: '/run',
 }
