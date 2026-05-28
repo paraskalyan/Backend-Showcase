@@ -7,6 +7,8 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ChevronLeft, Play, Copy, Code } from 'lucide-react';
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { runEndpoint } from '@/API/ExecutionAPIService';
 
 interface EndpointDetailViewProps {
   projectId: string;
@@ -43,17 +45,12 @@ export function EndpointDetailView({
   const [testResult, setTestResult] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const {mutate, isPending} = useMutation({
+    mutationFn: (id: string) => runEndpoint(id)
+  })
+
   const handleTestEndpoint = async () => {
-    setIsLoading(true);
-    // Simulate API test
-    setTimeout(() => {
-      setTestResult({
-        statusCode: 200,
-        time: '245ms',
-        size: '2.3kb',
-      });
-      setIsLoading(false);
-    }, 1000);
+    mutate(endpointId)
   };
 
   return (

@@ -4,25 +4,26 @@ import { EndpointDetailView } from "@/components/project/endpoint-detail-view";
 import { mockEndpoint } from "@/helpers/mockData";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import { useState } from "react";
 
 export default function EndpointDetailPage() {
   const { endpointId } = useParams();
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["project", endpointId],
+  const { data: endpoint, isLoading } = useQuery({
+    queryKey: ['singleEndpoint', endpointId],
     queryFn: () => getSingleEndpoint(String(endpointId)),
   });
   return (
     <EndpointDetailView
-      projectId={mockEndpoint.projectId}
-      projectName={mockEndpoint.projectName}
-      endpointId={mockEndpoint.endpointId}
-      endpointName={mockEndpoint.endpointName}
-      method={mockEndpoint.method}
-      path={mockEndpoint.path}
-      description={mockEndpoint.description}
-      requestExample={mockEndpoint.requestExample}
-      responseExample={mockEndpoint.responseExample}
+      projectId={endpoint.projectId}
+      projectName={endpoint.projectName}
+      endpointId={endpoint.id}
+      endpointName={endpoint.name}
+      method={endpoint.method}
+      path={endpoint.url}
+      description={endpoint.description}
+      requestExample={endpoint.requestExample}
+      responseExample={endpoint.responseExample}
     />
   );
 }
