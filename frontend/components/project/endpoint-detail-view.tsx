@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { ChevronLeft, Play, Copy, Code } from 'lucide-react';
-import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { runEndpoint } from '@/API/ExecutionAPIService';
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { ChevronLeft, Play, Copy, Code } from "lucide-react";
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { runEndpoint } from "@/API/ExecutionAPIService";
 
 interface EndpointDetailViewProps {
   projectId: string;
   projectName: string;
   endpointId: string;
   endpointName: string;
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
   path: string;
   description?: string;
   requestExample?: string;
@@ -23,34 +23,35 @@ interface EndpointDetailViewProps {
 }
 
 const methodColors: Record<string, string> = {
-  GET: 'bg-blue-500/20 text-blue-300',
-  POST: 'bg-green-500/20 text-green-300',
-  PUT: 'bg-yellow-500/20 text-yellow-300',
-  DELETE: 'bg-red-500/20 text-red-300',
-  PATCH: 'bg-purple-500/20 text-purple-300',
+  GET: "bg-blue-500/20 text-blue-300",
+  POST: "bg-green-500/20 text-green-300",
+  PUT: "bg-yellow-500/20 text-yellow-300",
+  DELETE: "bg-red-500/20 text-red-300",
+  PATCH: "bg-purple-500/20 text-purple-300",
 };
 
-export function EndpointDetailView({
-  projectId,
-  projectName,
-  endpointId,
-  endpointName,
-  method,
-  path,
-  description,
-  requestExample,
-  responseExample,
-}: EndpointDetailViewProps) {
-  const [activeTab, setActiveTab] = useState<'request' | 'response'>('request');
+export function EndpointDetailView({ endpoint }: any) {
+  console.log(endpoint);
+  const {
+    id: endpointId,
+    name: endpointName,
+    method,
+    projectId,
+    url: path,
+    description,
+    body: requestExample,
+  } = endpoint;
+  console.log(endpointId, endpointName, method);
+  const [activeTab, setActiveTab] = useState<"request" | "response">("request");
   const [testResult, setTestResult] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const {mutate, isPending} = useMutation({
-    mutationFn: (id: string) => runEndpoint(id)
-  })
+  const { mutate, isPending } = useMutation({
+    mutationFn: (id: string) => runEndpoint(id),
+  });
 
   const handleTestEndpoint = async () => {
-    mutate(endpointId)
+    mutate(endpointId);
   };
 
   return (
@@ -62,16 +63,20 @@ export function EndpointDetailView({
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4"
         >
           <ChevronLeft className="h-4 w-4" />
-          Back to {projectName}
+          Back to the project
         </Link>
 
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-2">
-              <Badge className={`${methodColors[method]} font-mono font-semibold`}>
+              <Badge
+                className={`${methodColors[method]} font-mono font-semibold`}
+              >
                 {method}
               </Badge>
-              <h1 className="text-3xl font-bold text-foreground">{endpointName}</h1>
+              <h1 className="text-3xl font-bold text-foreground">
+                {endpointName}
+              </h1>
             </div>
 
             <div className="flex items-center gap-2 mb-3">
@@ -94,13 +99,9 @@ export function EndpointDetailView({
             )}
           </div>
 
-          <Button
-            size="lg"
-            onClick={handleTestEndpoint}
-            disabled={isLoading}
-          >
+          <Button size="lg" onClick={handleTestEndpoint} disabled={isLoading}>
             <Play className="h-4 w-4" />
-            {isLoading ? 'Testing...' : 'Test Endpoint'}
+            {isLoading ? "Testing..." : "Test Endpoint"}
           </Button>
         </div>
       </div>
@@ -110,21 +111,21 @@ export function EndpointDetailView({
         <Card className="border-border">
           <div className="flex gap-0 border-b border-border">
             <button
-              onClick={() => setActiveTab('request')}
+              onClick={() => setActiveTab("request")}
               className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
-                activeTab === 'request'
-                  ? 'border-b-2 border-accent text-accent'
-                  : 'text-muted-foreground hover:text-foreground'
+                activeTab === "request"
+                  ? "border-b-2 border-accent text-accent"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Request
             </button>
             <button
-              onClick={() => setActiveTab('response')}
+              onClick={() => setActiveTab("response")}
               className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
-                activeTab === 'response'
-                  ? 'border-b-2 border-accent text-accent'
-                  : 'text-muted-foreground hover:text-foreground'
+                activeTab === "response"
+                  ? "border-b-2 border-accent text-accent"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Response
@@ -132,14 +133,18 @@ export function EndpointDetailView({
           </div>
 
           <div className="p-4">
-            {activeTab === 'request' ? (
+            {activeTab === "request" ? (
               <div className="space-y-4">
                 <div>
                   <label className="text-xs font-semibold text-muted-foreground uppercase mb-2 block">
                     Request Body
                   </label>
                   <div className="bg-muted rounded p-3 font-mono text-xs text-foreground overflow-auto max-h-60">
-                    <pre>{requestExample || 'No request body'}</pre>
+                    <pre>
+                      {requestExample
+                        ? JSON.stringify(requestExample, null, 2)
+                        : "No request body"}
+                    </pre>
                   </div>
                 </div>
               </div>
@@ -150,7 +155,7 @@ export function EndpointDetailView({
                     Response Example
                   </label>
                   <div className="bg-muted rounded p-3 font-mono text-xs text-foreground overflow-auto max-h-60">
-                    <pre>{responseExample || 'No response example'}</pre>
+                    {/* <pre>{responseExample || 'No response example'}</pre> */}
                   </div>
                 </div>
               </div>
@@ -168,25 +173,39 @@ export function EndpointDetailView({
             {testResult ? (
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-3 bg-green-500/10 rounded border border-green-500/20">
-                  <span className="text-sm font-medium text-green-300">Status Code</span>
-                  <span className="text-2xl font-bold text-green-300">{testResult.statusCode}</span>
+                  <span className="text-sm font-medium text-green-300">
+                    Status Code
+                  </span>
+                  <span className="text-2xl font-bold text-green-300">
+                    {testResult.statusCode}
+                  </span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div className="p-3 bg-muted rounded">
-                    <p className="text-xs text-muted-foreground mb-1">Response Time</p>
-                    <p className="text-lg font-semibold text-foreground">{testResult.time}</p>
+                    <p className="text-xs text-muted-foreground mb-1">
+                      Response Time
+                    </p>
+                    <p className="text-lg font-semibold text-foreground">
+                      {testResult.time}
+                    </p>
                   </div>
                   <div className="p-3 bg-muted rounded">
-                    <p className="text-xs text-muted-foreground mb-1">Response Size</p>
-                    <p className="text-lg font-semibold text-foreground">{testResult.size}</p>
+                    <p className="text-xs text-muted-foreground mb-1">
+                      Response Size
+                    </p>
+                    <p className="text-lg font-semibold text-foreground">
+                      {testResult.size}
+                    </p>
                   </div>
                 </div>
 
                 <div className="p-3 bg-muted rounded">
-                  <p className="text-xs text-muted-foreground mb-2">Response Body</p>
+                  <p className="text-xs text-muted-foreground mb-2">
+                    Response Body
+                  </p>
                   <pre className="font-mono text-xs text-foreground overflow-auto max-h-40 bg-background rounded p-2">
-{`{
+                    {`{
   "success": true,
   "data": {...}
 }`}
