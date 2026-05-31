@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { X, Plus, Trash2, ChevronDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
+import { X, Plus, Trash2, ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface AddEndpointModalProps {
   isOpen: boolean;
@@ -18,31 +18,37 @@ interface AddEndpointModalProps {
   }) => void;
 }
 
-const HTTP_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
+const HTTP_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"];
 
 export function AddEndpointModal({
   isOpen,
   onClose,
   onAddEndpoint,
 }: AddEndpointModalProps) {
-  const [activeTab, setActiveTab] = useState<'basic' | 'headers' | 'query' | 'body'>('basic');
+  const [activeTab, setActiveTab] = useState<
+    "basic" | "headers" | "query" | "body"
+  >("basic");
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    url: '',
-    method: 'GET',
+    name: "",
+    description: "",
+    url: "",
+    method: "GET",
     headers: {} as Record<string, string>,
     body: {} as Record<string, unknown>,
     queryParams: {} as Record<string, string>,
   });
-  const [headerInputs, setHeaderInputs] = useState<{ key: string; value: string }[]>([]);
-  const [queryInputs, setQueryInputs] = useState<{ key: string; value: string }[]>([]);
-  const [bodyJson, setBodyJson] = useState('{}');
+  const [headerInputs, setHeaderInputs] = useState<
+    { key: string; value: string }[]
+  >([]);
+  const [queryInputs, setQueryInputs] = useState<
+    { key: string; value: string }[]
+  >([]);
+  const [bodyJson, setBodyJson] = useState("{}");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleBasicChange = (
-    field: 'name' | 'description' | 'url' | 'method',
-    value: string
+    field: "name" | "description" | "url" | "method",
+    value: string,
   ) => {
     setFormData((prev) => ({
       ...prev,
@@ -51,14 +57,18 @@ export function AddEndpointModal({
   };
 
   const addHeaderInput = () => {
-    setHeaderInputs((prev) => [...prev, { key: '', value: '' }]);
+    setHeaderInputs((prev) => [...prev, { key: "", value: "" }]);
   };
 
   const removeHeaderInput = (index: number) => {
     setHeaderInputs((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const updateHeaderInput = (index: number, field: 'key' | 'value', value: string) => {
+  const updateHeaderInput = (
+    index: number,
+    field: "key" | "value",
+    value: string,
+  ) => {
     setHeaderInputs((prev) => {
       const updated = [...prev];
       updated[index][field] = value;
@@ -67,14 +77,18 @@ export function AddEndpointModal({
   };
 
   const addQueryInput = () => {
-    setQueryInputs((prev) => [...prev, { key: '', value: '' }]);
+    setQueryInputs((prev) => [...prev, { key: "", value: "" }]);
   };
 
   const removeQueryInput = (index: number) => {
     setQueryInputs((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const updateQueryInput = (index: number, field: 'key' | 'value', value: string) => {
+  const updateQueryInput = (
+    index: number,
+    field: "key" | "value",
+    value: string,
+  ) => {
     setQueryInputs((prev) => {
       const updated = [...prev];
       updated[index][field] = value;
@@ -84,9 +98,9 @@ export function AddEndpointModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name.trim() || !formData.url.trim()) {
-      alert('Please fill in name and URL');
+      alert("Please fill in name and URL");
       return;
     }
 
@@ -101,7 +115,7 @@ export function AddEndpointModal({
           }
           return acc;
         },
-        {} as Record<string, string>
+        {} as Record<string, string>,
       );
 
       // Parse query params
@@ -112,7 +126,7 @@ export function AddEndpointModal({
           }
           return acc;
         },
-        {} as Record<string, string>
+        {} as Record<string, string>,
       );
 
       // Parse body
@@ -120,7 +134,7 @@ export function AddEndpointModal({
       try {
         body = bodyJson.trim() ? JSON.parse(bodyJson) : {};
       } catch {
-        alert('Invalid JSON in body');
+        alert("Invalid JSON in body");
         setIsSubmitting(false);
         return;
       }
@@ -132,24 +146,24 @@ export function AddEndpointModal({
         body,
       };
 
-      console.log(endpointData)
+      console.log(endpointData);
 
       onAddEndpoint(endpointData);
-      
+
       // Reset form
       setFormData({
-        name: '',
-        description: '',
-        url: '',
-        method: 'GET',
+        name: "",
+        description: "",
+        url: "",
+        method: "GET",
         headers: {},
         body: {},
         queryParams: {},
       });
       setHeaderInputs([]);
       setQueryInputs([]);
-      setBodyJson('{}');
-      setActiveTab('basic');
+      setBodyJson("{}");
+      setActiveTab("basic");
       onClose();
     } finally {
       setIsSubmitting(false);
@@ -163,7 +177,9 @@ export function AddEndpointModal({
       <div className="bg-card border border-border rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-border">
-          <h2 className="text-xl font-bold text-foreground">Add New Endpoint</h2>
+          <h2 className="text-xl font-bold text-foreground">
+            Add New Endpoint
+          </h2>
           <button
             onClick={onClose}
             className="text-muted-foreground hover:text-foreground transition-colors"
@@ -174,14 +190,14 @@ export function AddEndpointModal({
 
         {/* Tabs */}
         <div className="flex border-b border-border">
-          {['basic', 'headers', 'query', 'body'].map((tab) => (
+          {["basic", "headers", "query", "body"].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab as typeof activeTab)}
               className={`px-4 py-3 font-medium text-sm transition-colors border-b-2 ${
                 activeTab === tab
-                  ? 'text-accent border-b-accent'
-                  : 'text-muted-foreground border-b-transparent hover:text-foreground'
+                  ? "text-accent border-b-accent"
+                  : "text-muted-foreground border-b-transparent hover:text-foreground"
               }`}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -192,7 +208,7 @@ export function AddEndpointModal({
         {/* Content */}
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6">
           {/* Basic Tab */}
-          {activeTab === 'basic' && (
+          {activeTab === "basic" && (
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
@@ -201,7 +217,7 @@ export function AddEndpointModal({
                 <input
                   type="text"
                   value={formData.name}
-                  onChange={(e) => handleBasicChange('name', e.target.value)}
+                  onChange={(e) => handleBasicChange("name", e.target.value)}
                   placeholder="e.g., Get User Profile"
                   className="w-full px-3 py-2 bg-secondary border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-colors"
                   disabled={isSubmitting}
@@ -214,7 +230,9 @@ export function AddEndpointModal({
                 </label>
                 <textarea
                   value={formData.description}
-                  onChange={(e) => handleBasicChange('description', e.target.value)}
+                  onChange={(e) =>
+                    handleBasicChange("description", e.target.value)
+                  }
                   placeholder="Describe what this endpoint does..."
                   rows={3}
                   className="w-full px-3 py-2 bg-secondary border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-colors resize-none"
@@ -229,7 +247,9 @@ export function AddEndpointModal({
                   </label>
                   <select
                     value={formData.method}
-                    onChange={(e) => handleBasicChange('method', e.target.value)}
+                    onChange={(e) =>
+                      handleBasicChange("method", e.target.value)
+                    }
                     className="w-full px-3 py-2 bg-secondary border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-colors appearance-none cursor-pointer"
                     disabled={isSubmitting}
                   >
@@ -248,7 +268,7 @@ export function AddEndpointModal({
                   <input
                     type="text"
                     value={formData.url}
-                    onChange={(e) => handleBasicChange('url', e.target.value)}
+                    onChange={(e) => handleBasicChange("url", e.target.value)}
                     placeholder="e.g., /api/users/:id"
                     className="w-full px-3 py-2 bg-secondary border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-colors"
                     disabled={isSubmitting}
@@ -259,7 +279,7 @@ export function AddEndpointModal({
           )}
 
           {/* Headers Tab */}
-          {activeTab === 'headers' && (
+          {activeTab === "headers" && (
             <div className="space-y-4">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-medium text-foreground">HTTP Headers</h3>
@@ -276,7 +296,9 @@ export function AddEndpointModal({
               </div>
 
               {headerInputs.length === 0 ? (
-                <p className="text-muted-foreground text-sm">No headers added yet.</p>
+                <p className="text-muted-foreground text-sm">
+                  No headers added yet.
+                </p>
               ) : (
                 <div className="space-y-3">
                   {headerInputs.map((header, index) => (
@@ -284,7 +306,9 @@ export function AddEndpointModal({
                       <input
                         type="text"
                         value={header.key}
-                        onChange={(e) => updateHeaderInput(index, 'key', e.target.value)}
+                        onChange={(e) =>
+                          updateHeaderInput(index, "key", e.target.value)
+                        }
                         placeholder="Key"
                         className="flex-1 px-3 py-2 bg-secondary border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-colors text-sm"
                         disabled={isSubmitting}
@@ -292,7 +316,9 @@ export function AddEndpointModal({
                       <input
                         type="text"
                         value={header.value}
-                        onChange={(e) => updateHeaderInput(index, 'value', e.target.value)}
+                        onChange={(e) =>
+                          updateHeaderInput(index, "value", e.target.value)
+                        }
                         placeholder="Value"
                         className="flex-1 px-3 py-2 bg-secondary border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-colors text-sm"
                         disabled={isSubmitting}
@@ -313,10 +339,12 @@ export function AddEndpointModal({
           )}
 
           {/* Query Tab */}
-          {activeTab === 'query' && (
+          {activeTab === "query" && (
             <div className="space-y-4">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-medium text-foreground">Query Parameters</h3>
+                <h3 className="font-medium text-foreground">
+                  Query Parameters
+                </h3>
                 <Button
                   type="button"
                   onClick={addQueryInput}
@@ -330,7 +358,9 @@ export function AddEndpointModal({
               </div>
 
               {queryInputs.length === 0 ? (
-                <p className="text-muted-foreground text-sm">No query parameters added yet.</p>
+                <p className="text-muted-foreground text-sm">
+                  No query parameters added yet.
+                </p>
               ) : (
                 <div className="space-y-3">
                   {queryInputs.map((param, index) => (
@@ -338,7 +368,9 @@ export function AddEndpointModal({
                       <input
                         type="text"
                         value={param.key}
-                        onChange={(e) => updateQueryInput(index, 'key', e.target.value)}
+                        onChange={(e) =>
+                          updateQueryInput(index, "key", e.target.value)
+                        }
                         placeholder="Key"
                         className="flex-1 px-3 py-2 bg-secondary border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-colors text-sm"
                         disabled={isSubmitting}
@@ -346,7 +378,9 @@ export function AddEndpointModal({
                       <input
                         type="text"
                         value={param.value}
-                        onChange={(e) => updateQueryInput(index, 'value', e.target.value)}
+                        onChange={(e) =>
+                          updateQueryInput(index, "value", e.target.value)
+                        }
                         placeholder="Value"
                         className="flex-1 px-3 py-2 bg-secondary border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-colors text-sm"
                         disabled={isSubmitting}
@@ -367,7 +401,7 @@ export function AddEndpointModal({
           )}
 
           {/* Body Tab */}
-          {activeTab === 'body' && (
+          {activeTab === "body" && (
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
@@ -405,7 +439,7 @@ export function AddEndpointModal({
             disabled={isSubmitting}
             className="flex-1 bg-accent hover:bg-accent/90 text-accent-foreground"
           >
-            {isSubmitting ? 'Adding...' : 'Add Endpoint'}
+            {isSubmitting ? "Adding..." : "Add Endpoint"}
           </Button>
         </div>
       </div>
