@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ChevronLeft, Edit2, Trash2 } from 'lucide-react';
-import CommonDialog from '../CommonDialog';
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, Edit2, Trash2 } from "lucide-react";
+import CommonDialog from "../CommonDialog";
 
 interface ProjectHeaderProps {
   projectName: string;
   description: string;
-  visibility: 'public' | 'private';
+  visibility: "public" | "private";
   createdAt: string;
   onDeleteProject: () => void;
 }
@@ -34,9 +34,11 @@ export function ProjectHeader({
           </Link>
 
           <div className="flex items-center gap-3 mb-2">
-            <h1 className="text-3xl font-bold text-foreground">{projectName}</h1>
-            <Badge variant={visibility === 'public' ? 'default' : 'secondary'}>
-              {visibility === 'public' ? '🌐 Public' : '🔒 Private'}
+            <h1 className="text-3xl font-bold text-foreground">
+              {projectName}
+            </h1>
+            <Badge variant={visibility === "public" ? "default" : "secondary"}>
+              {visibility === "public" ? "🌐 Public" : "🔒 Private"}
             </Badge>
           </div>
 
@@ -45,10 +47,11 @@ export function ProjectHeader({
           </p>
 
           <p className="text-xs text-muted-foreground">
-            Created on {new Date(createdAt).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
+            Created on{" "}
+            {new Date(createdAt).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
             })}
           </p>
         </div>
@@ -60,16 +63,20 @@ export function ProjectHeader({
           </Button>
           <CommonDialog
             trigger={
-            <Button variant="outline" size="sm" className="text-destructive hover:bg-destructive/10">
-              <Trash2 className="h-4 w-4" />
-              Delete
-            </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-destructive hover:bg-destructive/10"
+              >
+                <Trash2 className="h-4 w-4" />
+                Delete
+              </Button>
             }
             title="Confirm Delete Project"
             description="This action cannot be undone."
             confirmText="Delete"
             onConfirm={onDeleteProject}
-            variant='destructive'
+            variant="destructive"
           />
         </div>
       </div>
