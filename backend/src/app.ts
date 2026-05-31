@@ -3,6 +3,7 @@ import authRoutes from './modules/auth/auth.routes.js';
 import projectRoutes from './modules/projects/projects.routes.js';
 import endpointRoutes from './modules/endpoint/endpoint.routes.js';
 import dashboardRoutes from './modules/dashboard/dashboard.routes.js';
+import executionRoutes from './modules/execution/execution.routes.js';
 import { errorHandler } from './middlewares/error.middleware.js';
 import { AppError } from './utils/AppError.js';
 import cors from 'cors'
@@ -24,6 +25,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/project', projectRoutes);
 app.use('/api/endpoint', endpointRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/execution', dashboardRoutes);
 
 app.use((req, res, next) => {
   next(new AppError(`Route ${req.originalUrl} not found`, 404));
