@@ -1,10 +1,10 @@
 export const API_ROUTES = {
-    LOGIN: '/auth/login',
-    SIGNUP: '/auth/signup',
+  LOGIN: "/auth/login",
+  SIGNUP: "/auth/signup",
 
-    PROJECTS : '/project',
+  PROJECTS: "/project",
 
-    DASHBOARD: '/dashboard/stats',
-    ENDPOINT: '/endpoint',
-    EXECUTION: '/run',
-}
+  DASHBOARD: "/dashboard/stats",
+  ENDPOINT: "/endpoint",
+  EXECUTION: "/execution/run",
+};
