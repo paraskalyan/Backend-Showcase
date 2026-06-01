@@ -43,10 +43,10 @@ export function EndpointDetailView({ endpoint }: any) {
   } = endpoint;
   console.log(endpointId, endpointName, method);
   const [activeTab, setActiveTab] = useState<"request" | "response">("request");
-  const [testResult, setTestResult] = useState<any>(null);
+  // const [testResult, setTestResult] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, data: testResult } = useMutation({
     mutationFn: (id: string) => runEndpoint(id),
   });
 
@@ -177,7 +177,7 @@ export function EndpointDetailView({ endpoint }: any) {
                     Status Code
                   </span>
                   <span className="text-2xl font-bold text-green-300">
-                    {testResult.statusCode}
+                    {testResult.data.statusCode}
                   </span>
                 </div>
 
@@ -187,7 +187,7 @@ export function EndpointDetailView({ endpoint }: any) {
                       Response Time
                     </p>
                     <p className="text-lg font-semibold text-foreground">
-                      {testResult.time}
+                      {testResult.data.responseTime} ms
                     </p>
                   </div>
                   <div className="p-3 bg-muted rounded">
@@ -195,7 +195,7 @@ export function EndpointDetailView({ endpoint }: any) {
                       Response Size
                     </p>
                     <p className="text-lg font-semibold text-foreground">
-                      {testResult.size}
+                      {testResult.data.responseSize}
                     </p>
                   </div>
                 </div>
@@ -205,10 +205,9 @@ export function EndpointDetailView({ endpoint }: any) {
                     Response Body
                   </p>
                   <pre className="font-mono text-xs text-foreground overflow-auto max-h-40 bg-background rounded p-2">
-                    {`{
-  "success": true,
-  "data": {...}
-}`}
+                    {
+                      JSON.stringify(testResult.data.responseBody)
+                    }
                   </pre>
                 </div>
               </div>
