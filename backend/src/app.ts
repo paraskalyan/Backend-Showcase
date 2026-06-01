@@ -25,7 +25,11 @@ app.use('/api/auth', authRoutes);
 app.use('/api/project', projectRoutes);
 app.use('/api/endpoint', endpointRoutes);
 app.use('/api/dashboard', dashboardRoutes);
-app.use('/api/execution', dashboardRoutes);
+app.use('/api/execution', executionRoutes);
+
+app.get('/health', (req, res)=>{
+  res.json({message: 'OK'})
+})
 
 app.use((req, res, next) => {
   next(new AppError(`Route ${req.originalUrl} not found`, 404));
