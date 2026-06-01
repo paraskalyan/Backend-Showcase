@@ -55,7 +55,10 @@ export const runExecution = async (endpointId: string, userId?: string) => {
     return {
       executionId: execution.id,
       status: "SUCCESS",
-      data: response.data,
+      responseBody: response.data,
+      responseTime,
+      statusCode: response.status,
+      responseSize: response.headers["content-length"] + " bytes"
     };
   } catch (error: any) {
     const responseTime = Date.now() - startTime;
@@ -83,6 +86,7 @@ export const runExecution = async (endpointId: string, userId?: string) => {
       executionId: execution.id,
       status: "FAILED",
       error: error.message,
+      responseTime,
     };
   }
 };
