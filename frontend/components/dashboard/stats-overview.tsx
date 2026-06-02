@@ -27,7 +27,7 @@ export function StatsOverview({data}: any) {
     },
     {
       label: 'Success Rate',
-      value: data?.successRate,
+      value: (data?.successRate?.toFixed(2) || 0) + "%",
       change: '+0.5% from last week',
       icon: TrendingUp,
       color: 'bg-pink-500/10 text-pink-400',
