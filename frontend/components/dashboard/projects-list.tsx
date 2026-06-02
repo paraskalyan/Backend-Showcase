@@ -111,7 +111,7 @@ export function ProjectsList({projects, onCreateProject}: any) {
               <div className="flex gap-6 text-sm">
                 <div>
                   <span className="text-muted-foreground">Endpoints:</span>
-                  <p className="font-semibold text-foreground">{project.endpoints}</p>
+                  <p className="font-semibold text-foreground">{project._count.endpoints || 0}</p>
                 </div>
                 <div>
                   <span className="text-muted-foreground">API Tests:</span>
