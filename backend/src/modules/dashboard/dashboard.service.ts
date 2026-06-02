@@ -34,6 +34,17 @@ export const getDashboardStats = async (userId: string) => {
     },
   });
 
+  const recentExecutions = await prisma.execution.findMany({
+    take: 5,
+    orderBy:{
+      createdAt: 'desc'
+    },
+    include:{
+      Endpoint: true
+    }
+    
+  })
+
   const successRate =
     totalExecutions === 0 ? 0 : (successfulExecutions / totalExecutions) * 100;
 
@@ -42,6 +53,7 @@ export const getDashboardStats = async (userId: string) => {
     totalEndpoints: totalEndpoints,
     totalExecutions: totalExecutions,
     successRate: successRate,
+    recentExecutions,
    } 
 
 };
