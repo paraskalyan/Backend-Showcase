@@ -1,8 +1,19 @@
 import { prisma } from "../../lib/prisma.js";
 import type { CreateProjectData } from "./types.js";
 
-export const getAllProjects = async () => {
-  const projects = await prisma.project.findMany();
+export const getAllProjects = async (userId: string) => {
+  const projects = await prisma.project.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      _count: {
+        select: {
+          endpoints: true,
+        },
+      },
+    },
+  });
   return projects;
 };
 
@@ -16,8 +27,11 @@ export const getProject = async (id: string) => {
   return project;
 };
 
-export const createProject = async (data: CreateProjectData, userId: string) => {
-    const project = await prisma.project.create({
+export const createProject = async (
+  data: CreateProjectData,
+  userId: string,
+) => {
+  const project = await prisma.project.create({
     data: {
       name: data.name,
       description: data.description,
@@ -47,13 +61,11 @@ export const createProject = async (data: CreateProjectData, userId: string) => 
 
   return project;
 };
-export const updateProject = async () => {
-
-};
-export const deleteProject = async (id : string) => {
- return await prisma.project.delete({
-    where:{
-      id
-    }
-  })
+export const updateProject = async () => {};
+export const deleteProject = async (id: string) => {
+  return await prisma.project.delete({
+    where: {
+      id,
+    },
+  });
 };

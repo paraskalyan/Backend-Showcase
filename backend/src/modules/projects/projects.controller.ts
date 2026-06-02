@@ -13,7 +13,8 @@ export const getAllProjects = async (
   next: NextFunction,
 ) => {
   try {
-    const projects = await projectService.getAllProjects();
+    const userId = req.user.id;
+    const projects = await projectService.getAllProjects(userId);
     return sendSuccess(res, projects, "Projects fetched successfully", 200);
   } catch (error) {
     next(error);
