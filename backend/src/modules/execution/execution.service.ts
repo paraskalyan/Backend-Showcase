@@ -13,7 +13,6 @@ export const runExecution = async (endpointId: string, userId?: string) => {
     throw new Error("ENDPOINT_NOT_FOUND");
   }
 
-  // 2️⃣ Create execution
   const execution = await prisma.execution.create({
     data: {
       endpointId,
@@ -25,7 +24,6 @@ export const runExecution = async (endpointId: string, userId?: string) => {
   const startTime = Date.now();
 
   try {
-    // 3️⃣ Call external API  
     const response = await axios({
       method: endpoint.method,
       url: endpoint.url,
@@ -63,7 +61,6 @@ export const runExecution = async (endpointId: string, userId?: string) => {
   } catch (error: any) {
     const responseTime = Date.now() - startTime;
 
-    // 6️⃣ Save failure log
     await prisma.executionLog.create({
       data: {
         endpointId,
@@ -76,7 +73,6 @@ export const runExecution = async (endpointId: string, userId?: string) => {
       },
     });
 
-    // 7️⃣ Update execution
     await prisma.execution.update({
       where: { id: execution.id },
       data: { status: "FAILED" },
