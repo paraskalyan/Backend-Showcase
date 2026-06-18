@@ -59,7 +59,7 @@ export function EndpointDetailView({ endpoint }: any) {
       {/* Header */}
       <div className="border-b border-border bg-card p-6">
         <Link
-          href={`/dashboard/projects/${projectId}`}
+          href={`/dashboard/project/${projectId}`}
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4"
         >
           <ChevronLeft className="h-4 w-4" />
