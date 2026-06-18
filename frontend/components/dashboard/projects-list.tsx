@@ -124,7 +124,7 @@ export function ProjectsList({projects, onCreateProject}: any) {
                   </p>
                 </div>
               </div>
-              <Button onClick={()=> router.push(`/dashboard/project/${project?.id}`)} variant="ghost" size="sm" className="text-accent hover:text-black hover:bg-cyan-600">
+              <Button onClick={()=> router.push(`/dashboard/project/${project?.id}`)} variant="ghost" size="sm" className="text-accent hover:text-black">
                 View Project
                 <ExternalLink className="w-4 h-4 ml-2" />
               </Button>
