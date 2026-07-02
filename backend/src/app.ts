@@ -27,6 +27,7 @@ app.use('/api/endpoint', endpointRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/execution', executionRoutes);
 
+// Endpoint to check server liveness and readiness
 app.get('/health', (req, res)=>{
   res.json({message: 'OK'})
 })
