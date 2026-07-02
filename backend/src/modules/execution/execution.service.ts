@@ -3,6 +3,7 @@ import { prisma } from "../../lib/prisma.js";
 import axios from "axios";
 import { ensureObject } from "../../utils/helpers.js";
 
+// Main code that runs the endpoint and sends response data to frontend
 export const runExecution = async (endpointId: string, userId?: string) => {
   const endpoint = await prisma.endpoint.findUnique({
     where: { id: endpointId },
