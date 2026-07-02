@@ -4,7 +4,6 @@ import axios from "axios";
 import { ensureObject } from "../../utils/helpers.js";
 
 export const runExecution = async (endpointId: string, userId?: string) => {
-  // 1️⃣ Get endpointl
   const endpoint = await prisma.endpoint.findUnique({
     where: { id: endpointId },
   });
